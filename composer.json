@@ -1,0 +1,33 @@
+{
+    "name": "selleet/selleet",
+    "description": "Shopping software",
+    "type": "project",
+    "require": {
+        "php": "^7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1",
+        "behat/behat": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Selleet\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SelleetTest\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.1"
+        },
+        "preferred-install": {
+            "*": "dist"
+        },
+        "bin-dir": "bin/",
+        "sort-packages": true
+    },
+    "license": "MIT"
+}

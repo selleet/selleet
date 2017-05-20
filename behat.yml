@@ -1,0 +1,7 @@
+default:
+    translation:
+        locale: en
+    suites:
+        domain:
+#            paths: [ '%paths.base%/tests/features/suites/Purchasing/Product' ]
+#            contexts: [ 'SelleetTest\Domain\Jewelry\Purchasing\JewelContext' ]
