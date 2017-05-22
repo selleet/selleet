@@ -3,5 +3,5 @@ default:
         locale: en
     suites:
         domain:
-#            paths: [ '%paths.base%/tests/features/suites/Purchasing/Product' ]
-#            contexts: [ 'SelleetTest\Domain\Jewelry\Purchasing\JewelContext' ]
+            paths: [ '%paths.base%/tests/features/Purchasing' ]
+            contexts: [ 'SelleetTest\Purchasing\FeatureContext' ]
