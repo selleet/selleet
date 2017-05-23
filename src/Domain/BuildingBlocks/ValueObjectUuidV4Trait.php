@@ -21,13 +21,18 @@ trait ValueObjectUuidV4Trait
         return new static(Uuid::fromString($valueObjectId));
     }
 
+    public function getId(): Uuid
+    {
+        return $this->uuid;
+    }
+
     public function toString(): string
     {
         return $this->uuid->toString();
     }
 
-    public function sameValueAs($other): bool
+    public function sameValueAs(ValueObjectIdentifier $other): bool
     {
-        return get_class($this) === get_class($other) && $this->uuid->equals($other->uuid);
+        return get_class($this) === get_class($other) && $this->uuid->equals($other->getId());
     }
 }

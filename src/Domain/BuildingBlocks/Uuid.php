@@ -10,11 +10,11 @@ final class Uuid
     /**
      * @var RamseyUuidInterface
      */
-    private $uuid;
+    private $uuidImplementation;
 
-    private function __construct(RamseyUuidInterface $uuid)
+    private function __construct(RamseyUuidInterface $uuidImplementation)
     {
-        $this->uuid = $uuid;
+        $this->uuidImplementation = $uuidImplementation;
     }
 
     public static function uuid4(): self
@@ -24,12 +24,12 @@ final class Uuid
 
     public function toString(): string
     {
-        return $this->uuid->toString();
+        return $this->uuidImplementation->toString();
     }
 
     public function equals(Uuid $other): bool
     {
-        return $this->uuid->equals($other);
+        return $this->uuidImplementation->equals($other->uuidImplementation);
     }
 
     public static function fromString(string $uuid): self

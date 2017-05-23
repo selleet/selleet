@@ -9,7 +9,7 @@ use Selleet\Domain\Jewelry\Purchasing\Cart;
 use Selleet\Domain\Jewelry\Purchasing\Jewel;
 use Selleet\Domain\Jewelry\Purchasing\JewelId;
 
-class FeatureContext implements Context
+class ShoppingContext implements Context
 {
     /**
      * @var Cart

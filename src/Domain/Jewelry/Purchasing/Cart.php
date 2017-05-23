@@ -16,6 +16,9 @@ final class Cart
      */
     private $jewels;
 
+    /**
+     * @var int
+     */
     private $totalPrice;
 
     private function __construct(CartId $id)

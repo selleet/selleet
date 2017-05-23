@@ -3,6 +3,7 @@
 namespace Selleet\Domain\Jewelry\Purchasing;
 
 use Selleet\Domain\BuildingBlocks\DomainEvent;
+use Selleet\Domain\BuildingBlocks\ValueObjectIdentifier;
 
 final class JewelWasAddedToTheCart implements DomainEvent
 {
@@ -15,7 +16,7 @@ final class JewelWasAddedToTheCart implements DomainEvent
         $this->jewel = $jewel;
     }
 
-    public function getId(): CartId
+    public function getAggregateId(): ValueObjectIdentifier
     {
         return $this->id;
     }

@@ -4,4 +4,4 @@ default:
     suites:
         domain:
             paths: [ '%paths.base%/tests/features/Purchasing' ]
-            contexts: [ 'SelleetTest\Purchasing\FeatureContext' ]
+            contexts: [ 'SelleetTest\Purchasing\ShoppingContext' ]
