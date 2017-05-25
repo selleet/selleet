@@ -6,10 +6,14 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use PHPUnit\Framework\Assert;
 use Selleet\Domain\Jewelry\Purchasing\Cart;
+use Selleet\Domain\Jewelry\Purchasing\CartId;
+use Selleet\Domain\Jewelry\Purchasing\EmptyCartWasPickedUp;
 use Selleet\Domain\Jewelry\Purchasing\Jewel;
 use Selleet\Domain\Jewelry\Purchasing\JewelId;
+use Selleet\Domain\Jewelry\Purchasing\JewelWasAddedToTheCart;
+use Selleet\Domain\Jewelry\Purchasing\NewJewelWasOut;
 
-class ShoppingContext implements Context
+class PurchasingContext implements Context
 {
     /**
      * @var Cart
@@ -26,7 +30,9 @@ class ShoppingContext implements Context
      */
     public function iHaveAnEmptyCart()
     {
-        $this->cart = Cart::pickUp();
+        $this->cart = Cart::reconstituteFromHistory([
+            new EmptyCartWasPickedUp(CartId::generate())
+        ]);
     }
 
     /**
@@ -34,7 +40,9 @@ class ShoppingContext implements Context
      */
     public function aJewelTitledAndPricedEurIsAvailableOnTheStore(string $jewelTitle, int $jewelPrice)
     {
-        $this->jewel = Jewel::titledAndPriced(JewelId::generate(), $jewelTitle, $jewelPrice);
+        $this->jewel = Jewel::reconstituteFromHistory([
+            new NewJewelWasOut(JewelId::generate(), $jewelTitle, $jewelPrice)
+        ]);
     }
 
     /**
@@ -42,7 +50,7 @@ class ShoppingContext implements Context
      */
     public function iAddTheJewelToMyCart()
     {
-        $this->cart->add($this->jewel);
+        $this->cart->add($this->jewel->getAggregateId(), $this->jewel->price());
     }
 
     /**

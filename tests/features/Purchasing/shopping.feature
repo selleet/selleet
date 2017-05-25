@@ -3,7 +3,7 @@ Feature: Shopping
   As a client
   I need to add jewels to my shopping cart
 
-  Scenario: Buy a single jewel
+  Scenario: Add a single jewel to an empty cart
     Given I have an empty cart
     And a jewel titled "Gold ring" and priced 100€ is available on the store
     When I add the jewel to my cart

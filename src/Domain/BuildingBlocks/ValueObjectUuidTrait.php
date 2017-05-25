@@ -2,7 +2,7 @@
 
 namespace Selleet\Domain\BuildingBlocks;
 
-trait ValueObjectUuidV4Trait
+trait ValueObjectUuidTrait
 {
     private $uuid;
 

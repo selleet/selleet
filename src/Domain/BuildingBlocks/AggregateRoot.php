@@ -2,7 +2,7 @@
 
 namespace Selleet\Domain\BuildingBlocks;
 
-interface DomainEvent
+interface AggregateRoot
 {
     public function getAggregateId();
 }

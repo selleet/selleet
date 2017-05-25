@@ -3,26 +3,32 @@
 namespace Selleet\Domain\Jewelry\Purchasing;
 
 use Selleet\Domain\BuildingBlocks\DomainEvent;
-use Selleet\Domain\BuildingBlocks\ValueObjectIdentifier;
 
 final class JewelWasAddedToTheCart implements DomainEvent
 {
-    private $id;
-    private $jewel;
+    private $cartId;
+    private $jewelId;
+    private $price;
 
-    public function __construct(CartId $id, Jewel $jewel)
+    public function __construct(CartId $cartId, JewelId $jewelId, int $price)
     {
-        $this->id = $id;
-        $this->jewel = $jewel;
+        $this->cartId = $cartId;
+        $this->jewelId = $jewelId;
+        $this->price = $price;
     }
 
-    public function getAggregateId(): ValueObjectIdentifier
+    public function getAggregateId(): CartId
     {
-        return $this->id;
+        return $this->cartId;
     }
 
-    public function getJewel(): Jewel
+    public function getJewelId(): JewelId
     {
-        return $this->jewel;
+        return $this->jewelId;
+    }
+
+    public function getPrice(): int
+    {
+        return $this->price;
     }
 }
