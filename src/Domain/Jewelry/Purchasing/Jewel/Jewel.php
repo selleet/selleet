@@ -1,6 +1,6 @@
 <?php
 
-namespace Selleet\Domain\Jewelry\Purchasing;
+namespace Selleet\Domain\Jewelry\Purchasing\Jewel;
 
 use Selleet\Domain\BuildingBlocks\AggregateRoot;
 use Selleet\Domain\BuildingBlocks\AggregateRootTrait;

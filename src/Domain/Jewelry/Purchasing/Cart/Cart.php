@@ -1,11 +1,12 @@
 <?php
 
-namespace Selleet\Domain\Jewelry\Purchasing;
+namespace Selleet\Domain\Jewelry\Purchasing\Cart;
 
 use Selleet\Domain\BuildingBlocks\AggregateRoot;
 use Selleet\Domain\BuildingBlocks\AggregateRootTrait;
 use Selleet\Domain\BuildingBlocks\DomainEvent;
 use Selleet\Domain\BuildingBlocks\UnknownDomainEventRecorded;
+use Selleet\Domain\Jewelry\Purchasing\Jewel\JewelId;
 
 final class Cart implements AggregateRoot
 {

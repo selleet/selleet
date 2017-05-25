@@ -5,13 +5,12 @@ namespace SelleetTest\Purchasing;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use PHPUnit\Framework\Assert;
-use Selleet\Domain\Jewelry\Purchasing\Cart;
-use Selleet\Domain\Jewelry\Purchasing\CartId;
-use Selleet\Domain\Jewelry\Purchasing\EmptyCartWasPickedUp;
-use Selleet\Domain\Jewelry\Purchasing\Jewel;
-use Selleet\Domain\Jewelry\Purchasing\JewelId;
-use Selleet\Domain\Jewelry\Purchasing\JewelWasAddedToTheCart;
-use Selleet\Domain\Jewelry\Purchasing\NewJewelWasOut;
+use Selleet\Domain\Jewelry\Purchasing\Cart\Cart;
+use Selleet\Domain\Jewelry\Purchasing\Cart\CartId;
+use Selleet\Domain\Jewelry\Purchasing\Cart\EmptyCartWasPickedUp;
+use Selleet\Domain\Jewelry\Purchasing\Jewel\Jewel;
+use Selleet\Domain\Jewelry\Purchasing\Jewel\JewelId;
+use Selleet\Domain\Jewelry\Purchasing\Jewel\NewJewelWasOut;
 
 class PurchasingContext implements Context
 {
