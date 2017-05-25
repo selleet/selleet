@@ -15,7 +15,9 @@ final class Jewel implements AggregateRoot
     private $title;
     private $price;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     public static function titledAndPriced(JewelId $id, string $title, int $price): self
     {

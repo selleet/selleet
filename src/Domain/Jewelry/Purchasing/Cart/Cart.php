@@ -27,7 +27,9 @@ final class Cart implements AggregateRoot
      */
     private $totalPrice;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     public static function pickUp(CartId $cartId)
     {
@@ -35,7 +37,6 @@ final class Cart implements AggregateRoot
         $self->recordThat(new EmptyCartWasPickedUp($cartId));
 
         return $self;
-
     }
 
     public function add(JewelId $jewelId, int $price): void
