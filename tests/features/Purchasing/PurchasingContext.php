@@ -49,7 +49,7 @@ class PurchasingContext implements Context
      */
     public function iAddTheJewelToMyCart()
     {
-        $this->cart->add($this->jewel->getAggregateId(), $this->jewel->price());
+        $this->cart = $this->cart->add($this->jewel->getAggregateId(), $this->jewel->price());
     }
 
     /**

@@ -31,7 +31,7 @@ final class Cart implements AggregateRoot
     {
     }
 
-    public static function pickUp(CartId $cartId)
+    public static function pickUp(CartId $cartId): self
     {
         $self = new self();
         $self->recordThat(new EmptyCartWasPickedUp($cartId));
@@ -39,9 +39,9 @@ final class Cart implements AggregateRoot
         return $self;
     }
 
-    public function add(JewelId $jewelId, int $price): void
+    public function add(JewelId $jewelId, int $price): self
     {
-        $this->recordThat(new JewelWasAddedToTheCart($this->id, $jewelId, $price));
+        return $this->recordThat(new JewelWasAddedToTheCart($this->id, $jewelId, $price));
     }
 
     public function totalPrice(): int
@@ -54,20 +54,24 @@ final class Cart implements AggregateRoot
         return $this->id;
     }
 
-    public function apply(DomainEvent $event): void
+    public function apply(DomainEvent $event): self
     {
         switch ($event) {
             case $event instanceof EmptyCartWasPickedUp:
-                $this->id = $event->getAggregateId();
-                $this->jewels = [];
-                $this->totalPrice = 0;
+                $self = clone $this;
+                $self->id = $event->getAggregateId();
+                $self->jewels = [];
+                $self->totalPrice = 0;
                 break;
             case $event instanceof JewelWasAddedToTheCart:
-                $this->jewels[] = $event->getJewelId();
-                $this->totalPrice += $event->getPrice();
+                $self = clone $this;
+                $self->jewels[] = $event->getJewelId();
+                $self->totalPrice += $event->getPrice();
                 break;
             default:
                 throw UnknownDomainEventRecorded::withEvent($event);
         }
+
+        return $self;
     }
 }
