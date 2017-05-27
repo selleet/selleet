@@ -5,7 +5,7 @@ namespace Selleet\Domain\Jewelry\Purchasing\Cart;
 use Selleet\Domain\BuildingBlocks\DomainEvent;
 use Selleet\Domain\Jewelry\Purchasing\Jewel\JewelId;
 
-final class JewelWasAddedToTheCart implements DomainEvent
+final class JewelWasAddedToCart implements DomainEvent
 {
     private $cartId;
     private $jewelId;

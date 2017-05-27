@@ -4,9 +4,17 @@
 
 # Tests
 
-test:
+unit:
+	@test -f bin/phpunit || echo "cannot run unit tests (needs phpunit/phpunit)"
+	php bin/phpunit --testdox tests
+.PHONY: unit
+
+features:
 	@test -f bin/behat || echo "cannot run tests (needs behat/behat)"
 	php bin/behat
+.PHONY: test
+
+test: unit features
 .PHONY: test
 
 # Coding Style

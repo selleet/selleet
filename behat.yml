@@ -3,5 +3,8 @@ default:
         locale: en
     suites:
         domain:
-            paths: [ '%paths.base%/tests/features/Purchasing' ]
-            contexts: [ 'SelleetTest\Purchasing\PurchasingContext' ]
+            paths: [ '%paths.base%/tests/Features/Purchasing' ]
+            contexts: [ 'SelleetTest\Features\Purchasing\PurchasingDomainContext' ]
+        infrastructure:
+            paths: [ '%paths.base%/tests/Features/Purchasing' ]
+            contexts: [ 'SelleetTest\Features\Purchasing\PurchasingInfrastructureContext' ]

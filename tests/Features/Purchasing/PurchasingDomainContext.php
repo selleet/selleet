@@ -1,6 +1,6 @@
 <?php
 
-namespace SelleetTest\Purchasing;
+namespace SelleetTest\Features\Purchasing;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
@@ -12,7 +12,7 @@ use Selleet\Domain\Jewelry\Purchasing\Jewel\Jewel;
 use Selleet\Domain\Jewelry\Purchasing\Jewel\JewelId;
 use Selleet\Domain\Jewelry\Purchasing\Jewel\NewJewelWasOut;
 
-class PurchasingContext implements Context
+class PurchasingDomainContext implements Context
 {
     /**
      * @var Cart

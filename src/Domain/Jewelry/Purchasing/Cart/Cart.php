@@ -33,15 +33,12 @@ final class Cart implements AggregateRoot
 
     public static function pickUp(CartId $cartId): self
     {
-        $self = new self();
-        $self->recordThat(new EmptyCartWasPickedUp($cartId));
-
-        return $self;
+        return (new self())->recordThat(new EmptyCartWasPickedUp($cartId));
     }
 
     public function add(JewelId $jewelId, int $price): self
     {
-        return $this->recordThat(new JewelWasAddedToTheCart($this->id, $jewelId, $price));
+        return $this->recordThat(new JewelWasAddedToCart($this->id, $jewelId, $price));
     }
 
     public function totalPrice(): int
@@ -56,15 +53,15 @@ final class Cart implements AggregateRoot
 
     public function apply(DomainEvent $event): self
     {
+        $self = clone $this;
+
         switch ($event) {
             case $event instanceof EmptyCartWasPickedUp:
-                $self = clone $this;
                 $self->id = $event->getAggregateId();
                 $self->jewels = [];
                 $self->totalPrice = 0;
                 break;
-            case $event instanceof JewelWasAddedToTheCart:
-                $self = clone $this;
+            case $event instanceof JewelWasAddedToCart:
                 $self->jewels[] = $event->getJewelId();
                 $self->totalPrice += $event->getPrice();
                 break;

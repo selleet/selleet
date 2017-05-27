@@ -21,10 +21,7 @@ final class Jewel implements AggregateRoot
 
     public static function titledAndPriced(JewelId $id, string $title, int $price): self
     {
-        $self = new self();
-        $self->recordThat(new NewJewelWasOut($id, $title, $price));
-
-        return $self;
+        return (new self())->recordThat(new NewJewelWasOut($id, $title, $price));
     }
 
     public function price(): int
@@ -39,9 +36,10 @@ final class Jewel implements AggregateRoot
 
     public function apply(DomainEvent $event): self
     {
+        $self = clone $this;
+
         switch ($event) {
             case $event instanceof NewJewelWasOut:
-                $self = clone $this;
                 $self->id = $event->getAggregateId();
                 $self->title = $event->getTitle();
                 $self->price = $event->getPrice();
