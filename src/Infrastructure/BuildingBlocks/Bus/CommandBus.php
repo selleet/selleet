@@ -27,6 +27,11 @@ class CommandBus
         }
 
         $commandHandlerId = $this->handlers[get_class($command)];
+
+        if (!$this->container->has($commandHandlerId)) {
+            throw new \RuntimeException($commandHandlerId.' is not a registered container service.');
+        }
+
         $commandHandler = $this->container->get($commandHandlerId);
 
         if (!$commandHandler instanceof CommandHandler) {

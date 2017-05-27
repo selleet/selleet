@@ -19,7 +19,8 @@ $config = (new Config('Selleet'))
 
 $config->getFinder()
     ->in([
-        __DIR__ . '/src'
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
     ]);
 
 return $config;

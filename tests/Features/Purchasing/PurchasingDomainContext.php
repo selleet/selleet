@@ -3,7 +3,6 @@
 namespace SelleetTest\Features\Purchasing;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 use PHPUnit\Framework\Assert;
 use Selleet\Domain\Jewelry\Purchasing\Cart\Cart;
 use Selleet\Domain\Jewelry\Purchasing\Cart\CartId;
@@ -30,7 +29,7 @@ class PurchasingDomainContext implements Context
     public function iHaveAnEmptyCart()
     {
         $this->cart = Cart::reconstituteFromHistory([
-            new EmptyCartWasPickedUp(CartId::generate())
+            new EmptyCartWasPickedUp(CartId::generate()),
         ]);
     }
 
@@ -40,7 +39,7 @@ class PurchasingDomainContext implements Context
     public function aJewelTitledAndPricedEurIsAvailableOnTheStore(string $jewelTitle, int $jewelPrice)
     {
         $this->jewel = Jewel::reconstituteFromHistory([
-            new NewJewelWasOut(JewelId::generate(), $jewelTitle, $jewelPrice)
+            new NewJewelWasOut(JewelId::generate(), $jewelTitle, $jewelPrice),
         ]);
     }
 

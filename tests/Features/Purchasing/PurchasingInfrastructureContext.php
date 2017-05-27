@@ -3,7 +3,6 @@
 namespace SelleetTest\Features\Purchasing;
 
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 use PHPUnit\Framework\Assert;
 use Selleet\Container\Domain\Jewelry\Purchasing\Cart\AddJewelToCartHandlerFactory;
 use Selleet\Container\Infrastructure\BuildingBlocks\Bus\CommandBusFactory;
@@ -49,7 +48,7 @@ class PurchasingInfrastructureContext implements Context
                 JewelRepository::class => InMemoryJewelRepositoryFactory::class,
                 CommandBus::class => CommandBusFactory::class,
                 AddJewelToCartHandler::class => AddJewelToCartHandlerFactory::class,
-            ]
+            ],
         ]);
         $this->cartRepository = $this->container->get(CartRepository::class);
         $this->jewelRepository = $this->container->get(JewelRepository::class);
