@@ -1,3 +1,5 @@
 /vendor/
 /bin/
+/var/tests/eventstore/*
+!/var/tests/eventstore/.gitkeep
 .php_cs.cache

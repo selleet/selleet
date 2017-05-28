@@ -4,12 +4,7 @@ namespace SelleetTest\Features\Purchasing;
 
 use Behat\Behat\Context\Context;
 use PHPUnit\Framework\Assert;
-use Selleet\Container\Domain\Jewelry\Purchasing\Cart\AddJewelToCartHandlerFactory;
-use Selleet\Container\Infrastructure\BuildingBlocks\Bus\CommandBusFactory;
-use Selleet\Container\Infrastructure\Jewelry\Purchasing\Cart\InMemoryCartRepositoryFactory;
-use Selleet\Container\Infrastructure\Jewelry\Purchasing\Jewel\InMemoryJewelRepositoryFactory;
 use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCart;
-use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCartHandler;
 use Selleet\Domain\Jewelry\Purchasing\Cart\Cart;
 use Selleet\Domain\Jewelry\Purchasing\Cart\CartId;
 use Selleet\Domain\Jewelry\Purchasing\Cart\CartRepository;
@@ -42,14 +37,8 @@ class PurchasingInfrastructureContext implements Context
 
     public function __construct()
     {
-        $this->container = new ServiceManager([
-            'factories' => [
-                CartRepository::class => InMemoryCartRepositoryFactory::class,
-                JewelRepository::class => InMemoryJewelRepositoryFactory::class,
-                CommandBus::class => CommandBusFactory::class,
-                AddJewelToCartHandler::class => AddJewelToCartHandlerFactory::class,
-            ],
-        ]);
+        $containerConfig = require __DIR__.'/../../../config/container.php';
+        $this->container = new ServiceManager($containerConfig);
         $this->cartRepository = $this->container->get(CartRepository::class);
         $this->jewelRepository = $this->container->get(JewelRepository::class);
         $this->commandBus = $this->container->get(CommandBus::class);

@@ -2,23 +2,26 @@
 #	include .env
 #endif
 
+.PHONY: clear-stores
+clear-stores:
+	rm var/tests/eventstore/*.txt
+
 # Tests
 
+.PHONY: unit features test
 unit:
 	@test -f bin/phpunit || echo "cannot run unit tests (needs phpunit/phpunit)"
 	php bin/phpunit --testdox tests
-.PHONY: unit
 
 features:
 	@test -f bin/behat || echo "cannot run tests (needs behat/behat)"
 	php bin/behat
-.PHONY: test
 
 test: unit features
-.PHONY: test
 
 # Coding Style
 
+.PHONY: cs cs-fix cs-ci
 cs:
 	./bin/php-cs-fixer fix --dry-run --stop-on-violation --diff
 

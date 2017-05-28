@@ -1,6 +1,6 @@
 <?php
 
-namespace SelleetTest\Domain\BuildingBlocks\Bus;
+namespace SelleetTest\Infrastructure\BuildingBlocks\Bus;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
