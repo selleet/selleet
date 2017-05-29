@@ -2,6 +2,7 @@
 
 namespace Selleet\Infrastructure\BuildingBlocks\EventStore;
 
+use LogicException;
 use RuntimeException;
 use SplFileObject;
 
@@ -27,8 +28,13 @@ class InFileEventStore implements EventStore
             return;
         }
 
-        $fileObject = new SplFileObject($this->directory.'/'.$stream->getStreamName().'.txt', 'a');
-        $fileObject->flock(LOCK_EX);
+        $fileObject = new SplFileObject($this->getFilename($stream->getStreamName()), 'a');
+
+        if (false === $fileObject->flock(LOCK_EX)) {
+            throw new LogicException(
+                sprintf('Cannot lock file "%s".'), $this->getFilename($stream->getStreamName())
+            );
+        }
 
         foreach ($stream->getStreamEvents() as $event) {
             $fileObject->fwrite(serialize($event)."\n");
@@ -40,7 +46,7 @@ class InFileEventStore implements EventStore
     public function load(StreamName $streamName): Stream
     {
         try {
-            $fileObject = new SplFileObject($this->directory.'/'.$streamName.'.txt', 'r');
+            $fileObject = new SplFileObject($this->getFilename($streamName), 'r');
             $fileObject->setFlags(SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE);
 
             $events = [];
@@ -52,5 +58,10 @@ class InFileEventStore implements EventStore
         }
 
         return new Stream($streamName, $events);
+    }
+
+    private function getFilename(StreamName $streamName): string
+    {
+        return $this->directory.'/'.$streamName.'.txt';
     }
 }
