@@ -15,12 +15,9 @@ class StreamName
         $this->name = $name;
     }
 
-    public static function fromAggregateRoot(string $aggregateRootFQCN, string $aggregateRootId)
+    public static function fromAliasAndId($alias, $aggregateRootId)
     {
-        $fqcnParts = array_reverse(explode('\\', $aggregateRootFQCN));
-        $aggregateName = strtolower($fqcnParts[0]);
-
-        return new self($aggregateName.'_'.$aggregateRootId);
+        return new self($alias.'_'.$aggregateRootId);
     }
 
     public function getName(): string

@@ -11,6 +11,8 @@ use Selleet\Infrastructure\BuildingBlocks\EventStore\StreamName;
 
 class EventStoreCartRepository implements CartRepository
 {
+    private const ALIAS = 'purchasing_cart';
+
     private $eventStore;
 
     public function __construct(EventStore $eventStore)
@@ -21,7 +23,7 @@ class EventStoreCartRepository implements CartRepository
     public function get(CartId $cartId): Cart
     {
         $stream = $this->eventStore->load(
-            StreamName::fromAggregateRoot(Cart::class, $cartId->toString())
+            StreamName::fromAliasAndId(self::ALIAS, $cartId->toString())
         );
 
         return Cart::reconstituteFromHistory($stream->getStreamEvents());
@@ -30,7 +32,7 @@ class EventStoreCartRepository implements CartRepository
     public function save(Cart $cart): void
     {
         $this->eventStore->commit(new Stream(
-            StreamName::fromAggregateRoot(Cart::class, $cart->getAggregateId()->toString()),
+            StreamName::fromAliasAndId(self::ALIAS, $cart->getAggregateId()->toString()),
             $cart->getRecordedEvents()
         ));
     }

@@ -11,6 +11,8 @@ use Selleet\Infrastructure\BuildingBlocks\EventStore\StreamName;
 
 class EventStoreJewelRepository implements JewelRepository
 {
+    private const ALIAS = 'purchasing_jewel';
+
     private $eventStore;
 
     public function __construct(EventStore $eventStore)
@@ -21,7 +23,7 @@ class EventStoreJewelRepository implements JewelRepository
     public function get(JewelId $jewelId): Jewel
     {
         $stream = $this->eventStore->load(
-            StreamName::fromAggregateRoot(Jewel::class, $jewelId->toString())
+            StreamName::fromAliasAndId(self::ALIAS, $jewelId->toString())
         );
 
         return Jewel::reconstituteFromHistory($stream->getStreamEvents());
@@ -30,7 +32,7 @@ class EventStoreJewelRepository implements JewelRepository
     public function save(Jewel $jewel): void
     {
         $this->eventStore->commit(new Stream(
-            StreamName::fromAggregateRoot(Jewel::class, $jewel->getAggregateId()->toString()),
+            StreamName::fromAliasAndId(self::ALIAS, $jewel->getAggregateId()->toString()),
             $jewel->getRecordedEvents()
         ));
     }
