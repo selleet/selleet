@@ -28,10 +28,13 @@ class InFileEventStore implements EventStore
         }
 
         $fileObject = new SplFileObject($this->directory.'/'.$stream->getStreamName().'.txt', 'a');
+        $fileObject->flock(LOCK_EX);
 
         foreach ($stream->getStreamEvents() as $event) {
             $fileObject->fwrite(serialize($event)."\n");
         }
+
+        $fileObject->flock(LOCK_UN);
     }
 
     public function load(StreamName $streamName): Stream
