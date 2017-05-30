@@ -11,12 +11,12 @@ final class EmptyCartWasPickedUp implements DomainEvent
 
     public function __construct(CartId $cartId)
     {
-        $this->cartId = $cartId;
+        $this->cartId = $cartId->toString();
     }
 
     public function getAggregateId(): CartId
     {
-        return $this->cartId;
+        return CartId::fromString($this->cartId);
     }
 
     public function getAggregateType(): string
@@ -32,7 +32,7 @@ final class EmptyCartWasPickedUp implements DomainEvent
     public function serialize()
     {
         return json_encode([
-            'cartId' => $this->cartId->toString(),
+            'cartId' => $this->cartId,
         ]);
     }
 
@@ -40,6 +40,6 @@ final class EmptyCartWasPickedUp implements DomainEvent
     {
         $unserialized = json_decode($serialized);
 
-        $this->cartId = CartId::fromString($unserialized->cartId);
+        $this->cartId = $unserialized->cartId;
     }
 }

@@ -13,7 +13,7 @@ unit:
 	@test -f bin/phpunit || echo "cannot run unit tests (needs phpunit/phpunit)"
 	php bin/phpunit --testdox tests
 
-features:
+features: clear-stores
 	@test -f bin/behat || echo "cannot run tests (needs behat/behat)"
 	php bin/behat
 

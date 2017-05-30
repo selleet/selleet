@@ -14,19 +14,19 @@ final class JewelWasAddedToCart implements DomainEvent
 
     public function __construct(CartId $cartId, JewelId $jewelId, int $price)
     {
-        $this->cartId = $cartId;
-        $this->jewelId = $jewelId;
+        $this->cartId = $cartId->toString();
+        $this->jewelId = $jewelId->toString();
         $this->price = $price;
     }
 
     public function getAggregateId(): CartId
     {
-        return $this->cartId;
+        return CartId::fromString($this->cartId);
     }
 
     public function getJewelId(): JewelId
     {
-        return $this->jewelId;
+        return JewelId::fromString($this->jewelId);
     }
 
     public function getPrice(): int
@@ -47,8 +47,8 @@ final class JewelWasAddedToCart implements DomainEvent
     public function serialize()
     {
         return json_encode([
-            'cartId' => $this->cartId->toString(),
-            'jewelId' => $this->jewelId->toString(),
+            'cartId' => $this->cartId,
+            'jewelId' => $this->jewelId,
             'price' => $this->price,
         ]);
     }
@@ -57,8 +57,8 @@ final class JewelWasAddedToCart implements DomainEvent
     {
         $unserialized = json_decode($serialized);
 
-        $this->cartId = CartId::fromString($unserialized->cartId);
-        $this->jewelId = JewelId::fromString($unserialized->jewelId);
+        $this->cartId = $unserialized->cartId;
+        $this->jewelId = $unserialized->jewelId;
         $this->price = $unserialized->price;
     }
 }

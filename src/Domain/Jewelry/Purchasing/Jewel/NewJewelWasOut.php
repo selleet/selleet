@@ -13,14 +13,14 @@ final class NewJewelWasOut implements DomainEvent
 
     public function __construct(JewelId $jewelId, string $title, int $price)
     {
-        $this->jewelId = $jewelId;
+        $this->jewelId = $jewelId->toString();
         $this->title = $title;
         $this->price = $price;
     }
 
     public function getAggregateId(): JewelId
     {
-        return $this->jewelId;
+        return JewelId::fromString($this->jewelId);
     }
 
     public function getTitle(): string
@@ -46,7 +46,7 @@ final class NewJewelWasOut implements DomainEvent
     public function serialize()
     {
         return json_encode([
-            'jewelId' => $this->jewelId->toString(),
+            'jewelId' => $this->jewelId,
             'title' => $this->title,
             'price' => $this->price,
         ]);
@@ -56,7 +56,7 @@ final class NewJewelWasOut implements DomainEvent
     {
         $unserialized = json_decode($serialized);
 
-        $this->jewelId = JewelId::fromString($unserialized->jewelId);
+        $this->jewelId = $unserialized->jewelId;
         $this->title = $unserialized->title;
         $this->price = $unserialized->price;
     }
