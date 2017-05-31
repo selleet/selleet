@@ -4,9 +4,10 @@ namespace SelleetTest\Infrastructure\BuildingBlocks\Bus;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use Selleet\Domain\BuildingBlocks\Command\Command;
 use Selleet\Domain\BuildingBlocks\Command\CommandHandler;
 use Selleet\Infrastructure\BuildingBlocks\Bus\CommandBus;
+use Selleet\Infrastructure\BuildingBlocks\Bus\CommandSyncDispatcherMiddleware;
+use Selleet\Infrastructure\BuildingBlocks\Bus\CommandValidatorMiddleware;
 
 /**
  * @covers \Selleet\Infrastructure\BuildingBlocks\Bus\CommandBus
@@ -17,41 +18,76 @@ final class CommandBusTest extends TestCase
     {
         $this->assertInstanceOf(
             CommandBus::class,
-            new CommandBus(
+            new CommandBus([
+                new CommandSyncDispatcherMiddleware(
+                    [
+                        TestCommand::class => 'test_command_handler',
+                    ],
+                    $this->prophesize(ContainerInterface::class)->reveal()
+                ),
+            ])
+        );
+    }
+
+    public function testCanDispatchACommand(): void
+    {
+        $command = new TestCommand();
+        $command->test = 'foo';
+
+        $commandHandler = $this->getMockBuilder(CommandHandler::class)
+            ->setMethods(['__invoke'])
+            ->getMock();
+
+        $commandHandler->expects($this->once())
+            ->method('__invoke')
+            ->with($command);
+
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('test_command_handler')->willReturn($commandHandler);
+        $container->has('test_command_handler')->willReturn(true);
+
+        $commandBus = new CommandBus([
+            new CommandSyncDispatcherMiddleware(
                 [
                     TestCommand::class => 'test_command_handler',
                 ],
-                $this->prophesize(ContainerInterface::class)->reveal()
-            )
-        );
+                $container->reveal()
+            ),
+        ]);
+
+        $commandBus->dispatch($command);
     }
 
     public function testCanDispatchAValidCommand(): void
     {
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->get('test_command_handler')->willReturn(new class() implements CommandHandler {
-            /** @param TestCommand $command */
-            public function __invoke(Command $command): array
-            {
-                return [$command->test];
-            }
-        });
-        $container->has('test_command_handler')->willReturn(true);
-
-        $commandBus = new CommandBus(
-            [
-                TestCommand::class => 'test_command_handler',
-            ],
-            $container->reveal()
-        );
-
         $command = new TestCommand();
         $command->test = 'foo';
 
-        $events = $commandBus->dispatch($command);
+        $commandHandler = $this->getMockBuilder(CommandHandler::class)
+            ->setMethods(['__invoke'])
+            ->getMock();
 
-        $this->assertCount(1, $events);
-        $this->assertSame('foo', $events[0]);
+        $commandHandler->expects($this->once())
+            ->method('__invoke')
+            ->with($command);
+
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('test_command_handler')->willReturn($commandHandler);
+        $container->has('test_command_handler')->willReturn(true);
+
+        $commandBus = new CommandBus([
+            new CommandValidatorMiddleware([
+                TestCommand::class => new TestCommandValidator(),
+            ]),
+            new CommandSyncDispatcherMiddleware(
+                [
+                    TestCommand::class => 'test_command_handler',
+                ],
+                $container->reveal()
+            ),
+        ]);
+
+        $commandBus->dispatch($command);
     }
 
     public function testCannotDispatchANotRegisteredCommand(): void
@@ -59,21 +95,24 @@ final class CommandBusTest extends TestCase
         $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage('Command '.TestCommand::class.' not registered.');
 
-        $container = $this->prophesize(ContainerInterface::class);
-        $container->get('test_command_handler')->willReturn(new class() implements CommandHandler {
-            /** @param TestCommand $command */
-            public function __invoke(Command $command): array
-            {
-                return [$command->test];
-            }
-        });
+        $commandHandler = $this->getMockBuilder(CommandHandler::class)
+            ->setMethods(['__invoke'])
+            ->getMock();
 
-        $commandBus = new CommandBus(
-            [
-                \stdClass::class => 'test_command_handler',
-            ],
-            $container->reveal()
-        );
+        $commandHandler->expects($this->never())
+            ->method('__invoke');
+
+        $container = $this->prophesize(ContainerInterface::class);
+        $container->get('test_command_handler')->willReturn($commandHandler);
+
+        $commandBus = new CommandBus([
+            new CommandSyncDispatcherMiddleware(
+                [
+                    \stdClass::class => 'test_command_handler',
+                ],
+                $container->reveal()
+            ),
+        ]);
 
         $command = new TestCommand();
         $command->test = 'foo';
@@ -87,21 +126,17 @@ final class CommandBusTest extends TestCase
         $this->expectExceptionMessage(TestCommand::class.' has an invalid command handler.');
 
         $container = $this->prophesize(ContainerInterface::class);
-        $container->get('test_command_handler')->willReturn(new class() {
-            /** @param TestCommand $command */
-            public function __invoke(Command $command): array
-            {
-                return [$command->test];
-            }
-        });
+        $container->get('test_command_handler')->willReturn(new \stdClass());
         $container->has('test_command_handler')->willReturn(true);
 
-        $commandBus = new CommandBus(
-            [
-                TestCommand::class => 'test_command_handler',
-            ],
-            $container->reveal()
-        );
+        $commandBus = new CommandBus([
+            new CommandSyncDispatcherMiddleware(
+                [
+                    TestCommand::class => 'test_command_handler',
+                ],
+                $container->reveal()
+            ),
+        ]);
 
         $command = new TestCommand();
         $command->test = 'foo';
@@ -117,12 +152,14 @@ final class CommandBusTest extends TestCase
         $container = $this->prophesize(ContainerInterface::class);
         $container->has('test_command_handler')->willReturn(false);
 
-        $commandBus = new CommandBus(
-            [
-                TestCommand::class => 'test_command_handler',
-            ],
-            $container->reveal()
-        );
+        $commandBus = new CommandBus([
+            new CommandSyncDispatcherMiddleware(
+                [
+                    TestCommand::class => 'test_command_handler',
+                ],
+                $container->reveal()
+            ),
+        ]);
 
         $command = new TestCommand();
         $command->test = 'foo';
