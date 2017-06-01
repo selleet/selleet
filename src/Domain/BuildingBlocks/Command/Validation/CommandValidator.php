@@ -1,6 +1,6 @@
 <?php
 
-namespace Selleet\Infrastructure\BuildingBlocks\Bus\Validation;
+namespace Selleet\Domain\BuildingBlocks\Command\Validation;
 
 use Selleet\Domain\BuildingBlocks\Command\Command;
 

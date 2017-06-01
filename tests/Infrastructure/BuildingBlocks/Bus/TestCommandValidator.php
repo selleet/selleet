@@ -2,8 +2,8 @@
 
 namespace SelleetTest\Infrastructure\BuildingBlocks\Bus;
 
-use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidator;
-use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\ValidationResult;
+use Selleet\Domain\BuildingBlocks\Command\Validation\CommandValidator;
+use Selleet\Domain\BuildingBlocks\Command\Validation\ValidationResult;
 
 final class TestCommandValidator implements CommandValidator
 {

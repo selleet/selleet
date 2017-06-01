@@ -1,9 +1,10 @@
 <?php
 
-namespace Selleet\Infrastructure\BuildingBlocks\Bus\Validation;
+namespace Selleet\Infrastructure\BuildingBlocks\Bus;
 
 use Selleet\Domain\BuildingBlocks\Command\Command;
-use Selleet\Infrastructure\BuildingBlocks\Bus\CommandBusMiddleware;
+use Selleet\Domain\BuildingBlocks\Command\Validation\CommandValidator;
+use Selleet\Domain\BuildingBlocks\Command\Validation\InvalidCommand;
 
 final class CommandValidatorMiddleware implements CommandBusMiddleware
 {

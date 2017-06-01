@@ -1,17 +1,15 @@
 <?php
 
-namespace SelleetTest\Infrastructure\BuildingBlocks\Bus\Validation;
+namespace SelleetTest\Infrastructure\BuildingBlocks\Bus;
 
 use PHPUnit\Framework\TestCase;
-use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidator;
-use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidatorMiddleware;
-use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\InvalidCommand;
-use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\ValidationResult;
-use SelleetTest\Infrastructure\BuildingBlocks\Bus\TestCommand;
-use SelleetTest\Infrastructure\BuildingBlocks\Bus\TestCommandValidator;
+use Selleet\Domain\BuildingBlocks\Command\Validation\CommandValidator;
+use Selleet\Domain\BuildingBlocks\Command\Validation\InvalidCommand;
+use Selleet\Domain\BuildingBlocks\Command\Validation\ValidationResult;
+use Selleet\Infrastructure\BuildingBlocks\Bus\CommandValidatorMiddleware;
 
 /**
- * @covers \Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidatorMiddleware
+ * @covers \Selleet\Infrastructure\BuildingBlocks\Bus\CommandValidatorMiddleware
  */
 final class CommandValidatorMiddlewareTest extends TestCase
 {

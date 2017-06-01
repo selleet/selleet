@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 use Selleet\Domain\BuildingBlocks\Command\CommandHandler;
 use Selleet\Infrastructure\BuildingBlocks\Bus\CommandBus;
 use Selleet\Infrastructure\BuildingBlocks\Bus\CommandSyncDispatcherMiddleware;
-use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidatorMiddleware;
+use Selleet\Infrastructure\BuildingBlocks\Bus\CommandValidatorMiddleware;
 
 /**
  * @covers \Selleet\Infrastructure\BuildingBlocks\Bus\CommandBus

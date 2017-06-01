@@ -9,7 +9,7 @@ use Selleet\Infrastructure\BuildingBlocks\EventStore\EventStore;
 use Selleet\Infrastructure\BuildingBlocks\EventStore\Stream;
 use Selleet\Infrastructure\BuildingBlocks\EventStore\StreamName;
 
-class EventStoreJewelRepository implements JewelRepository
+final class EventStoreJewelRepository implements JewelRepository
 {
     private const ALIAS = 'purchasing_jewel';
 

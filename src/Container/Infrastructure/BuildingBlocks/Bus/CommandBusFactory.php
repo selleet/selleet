@@ -5,10 +5,10 @@ namespace Selleet\Container\Infrastructure\BuildingBlocks\Bus;
 use Psr\Container\ContainerInterface;
 use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCart;
 use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCartHandler;
+use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCartValidator;
 use Selleet\Infrastructure\BuildingBlocks\Bus\CommandBus;
 use Selleet\Infrastructure\BuildingBlocks\Bus\CommandSyncDispatcherMiddleware;
-use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidatorMiddleware;
-use Selleet\Infrastructure\Jewelry\Purchasing\Cart\AddJewelToCartValidator;
+use Selleet\Infrastructure\BuildingBlocks\Bus\CommandValidatorMiddleware;
 
 class CommandBusFactory
 {
