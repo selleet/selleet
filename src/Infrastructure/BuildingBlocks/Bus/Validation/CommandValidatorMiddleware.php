@@ -1,15 +1,16 @@
 <?php
 
-namespace Selleet\Infrastructure\BuildingBlocks\Bus;
+namespace Selleet\Infrastructure\BuildingBlocks\Bus\Validation;
 
 use Selleet\Domain\BuildingBlocks\Command\Command;
+use Selleet\Infrastructure\BuildingBlocks\Bus\CommandBusMiddleware;
 
 final class CommandValidatorMiddleware implements CommandBusMiddleware
 {
     private $validators;
 
     /**
-     * @param array $validators [Command => CommandValidator]
+     * @param CommandValidator[Command] $validators
      */
     public function __construct(array $validators)
     {
@@ -28,10 +29,10 @@ final class CommandValidatorMiddleware implements CommandBusMiddleware
             throw new \RuntimeException(get_class($command).' has an invalid command validator.');
         }
 
-        $errors = $commandValidator->validate($command);
+        $validationResult = $commandValidator->validate($command);
 
-        if (!empty($errors)) {
-            throw InvalidCommand::withErrors(get_class($command), $errors);
+        if (!$validationResult->isValid()) {
+            throw InvalidCommand::withErrors(get_class($command), $validationResult->getErrors());
         }
     }
 }

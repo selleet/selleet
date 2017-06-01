@@ -1,12 +1,12 @@
 <?php
 
-namespace Selleet\Infrastructure\BuildingBlocks\Bus;
+namespace Selleet\Infrastructure\BuildingBlocks\Bus\Validation;
 
 use InvalidArgumentException;
 
 final class InvalidCommand extends InvalidArgumentException
 {
-    public $errors;
+    private $errors;
 
     public static function withErrors(string $command, array $errors): self
     {
@@ -18,5 +18,10 @@ final class InvalidCommand extends InvalidArgumentException
         $self->errors = $errors;
 
         return $self;
+    }
+
+    public function getErrors(): array
+    {
+        return $this->errors;
     }
 }

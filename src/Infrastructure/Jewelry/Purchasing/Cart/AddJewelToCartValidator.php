@@ -3,7 +3,8 @@
 namespace Selleet\Infrastructure\Jewelry\Purchasing\Cart;
 
 use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCart;
-use Selleet\Infrastructure\BuildingBlocks\Bus\CommandValidator;
+use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidator;
+use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\ValidationResult;
 
 class AddJewelToCartValidator implements CommandValidator
 {
@@ -12,8 +13,8 @@ class AddJewelToCartValidator implements CommandValidator
      *
      * @return array Errors
      */
-    public function validate($command): array
+    public function validate($command): ValidationResult
     {
-        return [];
+        return new ValidationResult([]);
     }
 }

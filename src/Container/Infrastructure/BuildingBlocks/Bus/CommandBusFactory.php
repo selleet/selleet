@@ -7,7 +7,7 @@ use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCart;
 use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCartHandler;
 use Selleet\Infrastructure\BuildingBlocks\Bus\CommandBus;
 use Selleet\Infrastructure\BuildingBlocks\Bus\CommandSyncDispatcherMiddleware;
-use Selleet\Infrastructure\BuildingBlocks\Bus\CommandValidatorMiddleware;
+use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidatorMiddleware;
 use Selleet\Infrastructure\Jewelry\Purchasing\Cart\AddJewelToCartValidator;
 
 class CommandBusFactory

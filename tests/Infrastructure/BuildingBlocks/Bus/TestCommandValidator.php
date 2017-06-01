@@ -2,21 +2,22 @@
 
 namespace SelleetTest\Infrastructure\BuildingBlocks\Bus;
 
-use Selleet\Infrastructure\BuildingBlocks\Bus\CommandValidator;
+use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\CommandValidator;
+use Selleet\Infrastructure\BuildingBlocks\Bus\Validation\ValidationResult;
 
 final class TestCommandValidator implements CommandValidator
 {
-    private $errors = [];
-
     /**
      * @param TestCommand $command
      */
-    public function validate($command): array
+    public function validate($command): ValidationResult
     {
+        $errors = [];
+
         if ($command->test !== 'foo') {
-            $this->errors[] = 'test is invalid';
+            $errors['test'] = 'test is invalid';
         }
 
-        return $this->errors;
+        return new ValidationResult($errors);
     }
 }
