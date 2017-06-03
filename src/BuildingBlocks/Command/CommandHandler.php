@@ -11,5 +11,5 @@ interface CommandHandler
      *
      * @return DomainEvent[]
      */
-    public function __invoke(Command $command): array;
+    public function __invoke(Command $command): void;
 }
