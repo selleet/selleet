@@ -4,12 +4,12 @@ namespace SelleetTest\Features\Purchasing;
 
 use Behat\Behat\Context\Context;
 use PHPUnit\Framework\Assert;
-use Selleet\Domain\Jewelry\Purchasing\Cart\Cart;
-use Selleet\Domain\Jewelry\Purchasing\Cart\CartId;
-use Selleet\Domain\Jewelry\Purchasing\Cart\EmptyCartWasPickedUp;
-use Selleet\Domain\Jewelry\Purchasing\Jewel\Jewel;
-use Selleet\Domain\Jewelry\Purchasing\Jewel\JewelId;
-use Selleet\Domain\Jewelry\Purchasing\Jewel\NewJewelWasOut;
+use Selleet\Purchasing\Domain\Cart\Cart;
+use Selleet\Purchasing\Domain\Cart\CartId;
+use Selleet\Purchasing\Domain\Cart\EmptyCartWasPickedUp;
+use Selleet\Purchasing\Domain\Jewel\Jewel;
+use Selleet\Purchasing\Domain\Jewel\JewelId;
+use Selleet\Purchasing\Domain\Jewel\NewJewelWasOut;
 
 class PurchasingDomainContext implements Context
 {

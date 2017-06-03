@@ -4,14 +4,14 @@ namespace SelleetTest\Features\Purchasing;
 
 use Behat\Behat\Context\Context;
 use PHPUnit\Framework\Assert;
-use Selleet\Domain\Jewelry\Purchasing\Cart\AddJewelToCart;
-use Selleet\Domain\Jewelry\Purchasing\Cart\Cart;
-use Selleet\Domain\Jewelry\Purchasing\Cart\CartId;
-use Selleet\Domain\Jewelry\Purchasing\Cart\CartRepository;
-use Selleet\Domain\Jewelry\Purchasing\Jewel\Jewel;
-use Selleet\Domain\Jewelry\Purchasing\Jewel\JewelId;
-use Selleet\Domain\Jewelry\Purchasing\Jewel\JewelRepository;
-use Selleet\Infrastructure\BuildingBlocks\Bus\CommandBus;
+use Selleet\BuildingBlocks\Command\Bus\CommandBus;
+use Selleet\Purchasing\App\Cart\AddJewelToCart;
+use Selleet\Purchasing\Domain\Cart\Cart;
+use Selleet\Purchasing\Domain\Cart\CartId;
+use Selleet\Purchasing\Domain\Cart\CartRepository;
+use Selleet\Purchasing\Domain\Jewel\Jewel;
+use Selleet\Purchasing\Domain\Jewel\JewelId;
+use Selleet\Purchasing\Domain\Jewel\JewelRepository;
 use Zend\ServiceManager\ServiceManager;
 
 class PurchasingInfrastructureContext implements Context
