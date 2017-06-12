@@ -7,6 +7,7 @@ use Selleet\BuildingBlocks\EventStore\Stream;
 use Selleet\BuildingBlocks\EventStore\StreamName;
 use Selleet\Purchasing\Domain\Cart\Cart;
 use Selleet\Purchasing\Domain\Cart\CartId;
+use Selleet\Purchasing\Domain\Cart\CartNotFound;
 use Selleet\Purchasing\Domain\Cart\CartRepository;
 
 final class EventStoreCartRepository implements CartRepository
@@ -25,6 +26,10 @@ final class EventStoreCartRepository implements CartRepository
         $stream = $this->eventStore->load(
             StreamName::fromAliasAndId(self::ALIAS, $cartId->toString())
         );
+
+        if ($stream->isEmpty()) {
+            throw CartNotFound::withCartId($cartId);
+        }
 
         return Cart::reconstituteFromHistory($stream->getStreamEvents());
     }
