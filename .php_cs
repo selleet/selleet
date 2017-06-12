@@ -15,6 +15,7 @@ $config = (new Config('Selleet'))
         ],
         'heredoc_to_nowdoc' => false,
         'phpdoc_summary' => false,
+        'pre_increment' => false,
     ]);
 
 $config->getFinder()
