@@ -4,6 +4,12 @@ TARGETS:=$(MAKEFILE_LIST)
 #	include .env
 #endif
 
+# Help
+
+.PHONY: help
+help: ## This help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(TARGETS) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
 # Event store
 
 .PHONY: clear-stores
@@ -34,9 +40,3 @@ cs-fix: ## Fix code style
 
 cs-ci: ## Run Continuous Integration code style check
 	./bin/php-cs-fixer fix --dry-run --using-cache=no --verbose
-
-# Help
-
-.PHONY: help
-help: ## This help
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(TARGETS) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

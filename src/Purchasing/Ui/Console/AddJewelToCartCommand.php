@@ -4,6 +4,7 @@ namespace Selleet\Purchasing\Ui\Console;
 
 use Psr\Container\ContainerInterface;
 use Selleet\BuildingBlocks\Command\Bus\CommandBus;
+use Selleet\BuildingBlocks\Command\Validation\InvalidCommand;
 use Selleet\Purchasing\App\Cart\AddJewelToCart;
 use Selleet\Purchasing\Domain\Cart\CartId;
 use Selleet\Purchasing\Domain\Jewel\JewelId;
@@ -40,9 +41,15 @@ final class AddJewelToCartCommand extends Command
         $jewelIdAnswer = $helper->ask($input, $output, new Question('Jewel id: '));
         $jewelId = JewelId::fromString($jewelIdAnswer);
 
-        $this->container->get(CommandBus::class)->dispatch(new AddJewelToCart(
-            $cartId, $jewelId, 100
-        ));
+        $price = $helper->ask($input, $output, new Question('Price: '));
+
+        try {
+            $this->container->get(CommandBus::class)->dispatch(new AddJewelToCart(
+                $cartId, $jewelId, $price
+            ));
+        } catch (InvalidCommand $exception) {
+            $output->writeln(json_encode($exception->getErrors()));
+        }
 
         $output->writeln('Done.');
     }

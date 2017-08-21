@@ -36,18 +36,16 @@ final class Jewel implements AggregateRoot
 
     public function apply(DomainEvent $event): self
     {
-        $self = clone $this;
-
         switch ($event) {
             case $event instanceof NewJewelWasOut:
-                $self->id = $event->getAggregateId();
-                $self->title = $event->getTitle();
-                $self->price = $event->getPrice();
+                $this->id = $event->getAggregateId();
+                $this->title = $event->getTitle();
+                $this->price = $event->getPrice();
                 break;
             default:
                 throw UnknownDomainEventRecorded::withEvent($event);
         }
 
-        return $self;
+        return $this;
     }
 }

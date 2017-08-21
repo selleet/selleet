@@ -14,6 +14,14 @@ final class AddJewelToCartValidator implements CommandValidator
      */
     public function validate($command): ValidationResult
     {
-        return new ValidationResult([]);
+        $errors = [];
+
+        if ($command->price <= 0) {
+            $errors['price'] = [
+                'Price cannot be lower than 0.'
+            ];
+        }
+
+        return new ValidationResult($errors);
     }
 }

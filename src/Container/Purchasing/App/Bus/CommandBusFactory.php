@@ -15,16 +15,16 @@ class CommandBusFactory
     public function __invoke(ContainerInterface $container): CommandBus
     {
         return new CommandBus([
+            new CommandValidatorMiddleware(
+                [
+                    AddJewelToCart::class => new AddJewelToCartValidator(),
+                ]
+            ),
             new CommandSyncDispatcherMiddleware(
                 [
                     AddJewelToCart::class => AddJewelToCartHandler::class,
                 ],
                 $container
-            ),
-            new CommandValidatorMiddleware(
-                [
-                    AddJewelToCart::class => new AddJewelToCartValidator(),
-                ]
             ),
         ]);
     }

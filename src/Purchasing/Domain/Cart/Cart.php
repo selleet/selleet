@@ -53,22 +53,20 @@ final class Cart implements AggregateRoot
 
     public function apply(DomainEvent $event): self
     {
-        $self = clone $this;
-
         switch ($event) {
             case $event instanceof EmptyCartWasPickedUp:
-                $self->id = $event->getAggregateId();
-                $self->jewels = [];
-                $self->totalPrice = 0;
+                $this->id = $event->getAggregateId();
+                $this->jewels = [];
+                $this->totalPrice = 0;
                 break;
             case $event instanceof JewelWasAddedToCart:
-                $self->jewels[] = $event->getJewelId();
-                $self->totalPrice += $event->getPrice();
+                $this->jewels[] = $event->getJewelId();
+                $this->totalPrice += $event->getPrice();
                 break;
             default:
                 throw UnknownDomainEventRecorded::withEvent($event);
         }
 
-        return $self;
+        return $this;
     }
 }
