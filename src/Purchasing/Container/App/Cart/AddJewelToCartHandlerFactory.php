@@ -1,6 +1,6 @@
 <?php
 
-namespace Selleet\Container\Purchasing\App\Cart;
+namespace Selleet\Purchasing\Container\App\Cart;
 
 use Psr\Container\ContainerInterface;
 use Selleet\Purchasing\App\Cart\AddJewelToCartHandler;

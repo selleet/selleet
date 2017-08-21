@@ -1,6 +1,6 @@
 <?php
 
-namespace Selleet\Container\Purchasing\App\Bus;
+namespace Selleet\Purchasing\Container\App\Bus;
 
 use Psr\Container\ContainerInterface;
 use Selleet\BuildingBlocks\Command\Bus\CommandBus;

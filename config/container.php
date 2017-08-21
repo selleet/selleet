@@ -3,12 +3,12 @@
 use Selleet\BuildingBlocks\Command\Bus\CommandBus;
 use Selleet\BuildingBlocks\EventStore\EventStore;
 use Selleet\Container\Config\ConfigFactory;
-use Selleet\Container\Purchasing\App\Bus\CommandBusFactory;
-use Selleet\Container\Purchasing\App\Cart\AddJewelToCartHandlerFactory;
-use Selleet\Container\Purchasing\Infrastructure\Cart\EventStoreCartRepositoryFactory;
-use Selleet\Container\Purchasing\Infrastructure\EventStore\InFileEventStoreFactory;
-use Selleet\Container\Purchasing\Infrastructure\Jewel\EventStoreJewelRepositoryFactory;
 use Selleet\Purchasing\App\Cart\AddJewelToCartHandler;
+use Selleet\Purchasing\Container\App\Bus\CommandBusFactory;
+use Selleet\Purchasing\Container\App\Cart\AddJewelToCartHandlerFactory;
+use Selleet\Purchasing\Container\Infrastructure\Cart\EventStoreCartRepositoryFactory;
+use Selleet\Purchasing\Container\Infrastructure\EventStore\InFileEventStoreFactory;
+use Selleet\Purchasing\Container\Infrastructure\Jewel\EventStoreJewelRepositoryFactory;
 use Selleet\Purchasing\Domain\Cart\CartRepository;
 use Selleet\Purchasing\Domain\Jewel\JewelRepository;
 

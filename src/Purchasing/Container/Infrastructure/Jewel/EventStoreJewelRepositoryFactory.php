@@ -1,6 +1,6 @@
 <?php
 
-namespace Selleet\Container\Purchasing\Infrastructure\Jewel;
+namespace Selleet\Purchasing\Container\Infrastructure\Jewel;
 
 use Psr\Container\ContainerInterface;
 use Selleet\BuildingBlocks\EventStore\EventStore;

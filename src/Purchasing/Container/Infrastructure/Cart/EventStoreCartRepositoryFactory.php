@@ -1,6 +1,6 @@
 <?php
 
-namespace Selleet\Container\Purchasing\Infrastructure\Cart;
+namespace Selleet\Purchasing\Container\Infrastructure\Cart;
 
 use Psr\Container\ContainerInterface;
 use Selleet\BuildingBlocks\EventStore\EventStore;
