@@ -1,6 +1,6 @@
 <?php
 
-namespace Selleet\BuildingBlocks;
+namespace Selleet\BuildingBlocks\Aggregate;
 
 use Ramsey\Uuid\Uuid as RamseyUuid;
 use Ramsey\Uuid\UuidInterface as RamseyUuidInterface;

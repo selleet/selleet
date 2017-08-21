@@ -2,10 +2,10 @@
 
 namespace Selleet\Purchasing\Domain\Cart;
 
-use Selleet\BuildingBlocks\AggregateRoot;
-use Selleet\BuildingBlocks\AggregateRootTrait;
-use Selleet\BuildingBlocks\DomainEvent;
-use Selleet\BuildingBlocks\UnknownDomainEventRecorded;
+use Selleet\BuildingBlocks\Aggregate\AggregateRoot;
+use Selleet\BuildingBlocks\Aggregate\AggregateRootTrait;
+use Selleet\BuildingBlocks\Aggregate\DomainEvent;
+use Selleet\BuildingBlocks\Aggregate\UnknownDomainEventRecorded;
 use Selleet\Purchasing\Domain\Jewel\JewelId;
 
 final class Cart implements AggregateRoot

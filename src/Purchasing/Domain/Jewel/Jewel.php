@@ -2,10 +2,10 @@
 
 namespace Selleet\Purchasing\Domain\Jewel;
 
-use Selleet\BuildingBlocks\AggregateRoot;
-use Selleet\BuildingBlocks\AggregateRootTrait;
-use Selleet\BuildingBlocks\DomainEvent;
-use Selleet\BuildingBlocks\UnknownDomainEventRecorded;
+use Selleet\BuildingBlocks\Aggregate\AggregateRoot;
+use Selleet\BuildingBlocks\Aggregate\AggregateRootTrait;
+use Selleet\BuildingBlocks\Aggregate\DomainEvent;
+use Selleet\BuildingBlocks\Aggregate\UnknownDomainEventRecorded;
 
 final class Jewel implements AggregateRoot
 {

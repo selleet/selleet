@@ -1,6 +1,6 @@
 <?php
 
-namespace Selleet\BuildingBlocks;
+namespace Selleet\BuildingBlocks\Aggregate;
 
 trait ValueObjectUuidTrait
 {

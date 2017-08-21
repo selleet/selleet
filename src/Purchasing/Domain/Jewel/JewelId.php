@@ -2,8 +2,8 @@
 
 namespace Selleet\Purchasing\Domain\Jewel;
 
-use Selleet\BuildingBlocks\ValueObjectIdentifier;
-use Selleet\BuildingBlocks\ValueObjectUuidTrait;
+use Selleet\BuildingBlocks\Aggregate\ValueObjectIdentifier;
+use Selleet\BuildingBlocks\Aggregate\ValueObjectUuidTrait;
 
 final class JewelId implements ValueObjectIdentifier
 {

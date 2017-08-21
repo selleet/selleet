@@ -3,7 +3,7 @@
 namespace Selleet\Purchasing\Domain\Cart;
 
 use DateTimeInterface;
-use Selleet\BuildingBlocks\DomainEvent;
+use Selleet\BuildingBlocks\Aggregate\DomainEvent;
 use Selleet\Purchasing\Domain\Jewel\JewelId;
 
 final class JewelWasAddedToCart implements DomainEvent
