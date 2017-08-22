@@ -8,17 +8,19 @@ use SplFileObject;
 
 class InFileEventStore implements EventStore
 {
+    private $eventBus;
     private $directory;
 
     /**
      * @param string $directory Directory for storing the event store file (one file per stream name)
      */
-    public function __construct(string $directory)
+    public function __construct(EventDispatcher $eventBus, string $directory)
     {
         if (!is_dir($directory)) {
             throw new \InvalidArgumentException($this->directory.' is not an existing directory.');
         }
 
+        $this->eventBus = $eventBus;
         $this->directory = $directory;
     }
 
@@ -38,6 +40,7 @@ class InFileEventStore implements EventStore
 
         foreach ($stream->getStreamEvents() as $event) {
             $fileObject->fwrite(serialize($event)."\n");
+            $this->eventBus->dispatch($event);
         }
 
         $fileObject->flock(LOCK_UN);

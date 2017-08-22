@@ -3,6 +3,8 @@
 namespace SelleetTest\BuildingBlocks\EventStore;
 
 use PHPUnit\Framework\TestCase;
+use Selleet\BuildingBlocks\EventStore\EventBus;
+use Selleet\BuildingBlocks\EventStore\EventDispatcher;
 use Selleet\BuildingBlocks\EventStore\EventStore;
 use Selleet\BuildingBlocks\EventStore\InFileEventStore;
 use Selleet\BuildingBlocks\EventStore\Stream;
@@ -17,10 +19,12 @@ use Selleet\Purchasing\Domain\Jewel\JewelId;
  */
 final class InFileEventStoreTest extends TestCase
 {
+    private $eventBus;
     private $directory;
 
     protected function setUp()
     {
+        $this->eventBus = $this->prophesize(EventDispatcher::class);
         $this->directory = __DIR__.'/../../../var/tests/eventstore';
     }
 
@@ -28,13 +32,13 @@ final class InFileEventStoreTest extends TestCase
     {
         $this->assertInstanceOf(
             EventStore::class,
-            new InFileEventStore($this->directory)
+            new InFileEventStore($this->eventBus->reveal(), $this->directory)
         );
     }
 
     public function testCanCommitEventStream(): void
     {
-        $eventStore = new InFileEventStore($this->directory);
+        $eventStore = new InFileEventStore($this->eventBus->reveal(), $this->directory);
 
         $previousStream = $eventStore->load(new StreamName('test'));
         $numberOfEvents = count($previousStream->getStreamEvents());
@@ -48,5 +52,29 @@ final class InFileEventStoreTest extends TestCase
 
         $currentEventStream = $eventStore->load(new StreamName('test'));
         $this->assertCount($numberOfEvents + 2, $currentEventStream->getStreamEvents());
+    }
+
+    public function testCanDispatchEvents(): void
+    {
+        $dispatchedEvents = [];
+
+        $eventBus = new EventBus();
+        $eventBus->attachListener(EmptyCartWasPickedUp::class, function (EmptyCartWasPickedUp $event) use (&$dispatchedEvents) {
+            $dispatchedEvents[] = EmptyCartWasPickedUp::class;
+        });
+        $eventBus->attachListener(JewelWasAddedToCart::class, function (JewelWasAddedToCart $event) use (&$dispatchedEvents) {
+            $dispatchedEvents[] = JewelWasAddedToCart::class;
+        });
+
+        $eventStore = new InFileEventStore($eventBus, $this->directory);
+
+        $eventStream = new Stream(new StreamName('test'), [
+            new EmptyCartWasPickedUp($cartId = CartId::generate()),
+            new JewelWasAddedToCart($cartId, JewelId::generate(), 100),
+        ]);
+
+        $eventStore->commit($eventStream);
+
+        $this->assertEquals([EmptyCartWasPickedUp::class, JewelWasAddedToCart::class], $dispatchedEvents);
     }
 }

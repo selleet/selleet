@@ -2,4 +2,6 @@
 /bin/
 /var/tests/eventstore/*
 !/var/tests/eventstore/.gitkeep
+/var/tests/projections/*
+!/var/tests/projections/.gitkeep
 .php_cs.cache
