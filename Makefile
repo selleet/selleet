@@ -1,10 +1,5 @@
-TARGETS:=$(MAKEFILE_LIST)
-
-#ifndef APP_ENV
-#	include .env
-#endif
-
 # Help
+TARGETS:=$(MAKEFILE_LIST)
 
 .PHONY: help
 help: ## This help
@@ -13,8 +8,16 @@ help: ## This help
 # Event store
 
 .PHONY: clear-stores
-clear-stores: ## Purge event stores
+clear-stores: clear-projections ## Purge event stores
 	rm var/tests/eventstore/*.txt
+
+.PHONY: dump-projections-schema
+dump-projections-schema: ## Dump projections SQL schema
+	mysqldump --defaults-extra-file=config/mysqlpwd.cnf --add-drop-database --databases selleet --no-data > src/Purchasing/Infrastructure/db-scripts/create-mysql-schema.sql
+
+.PHONY: clear-projections
+clear-projections: ## Delete projections
+	mysql --defaults-extra-file=config/mysqlpwd.cnf selleet < src/Purchasing/Infrastructure/db-scripts/create-mysql-schema.sql
 
 # Tests
 

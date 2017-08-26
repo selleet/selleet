@@ -17,7 +17,7 @@ class InFileEventStore implements EventStore
     public function __construct(EventDispatcher $eventBus, string $directory)
     {
         if (!is_dir($directory)) {
-            throw new \InvalidArgumentException($this->directory.' is not an existing directory.');
+            throw new \InvalidArgumentException($directory.' is not an existing directory.');
         }
 
         $this->eventBus = $eventBus;

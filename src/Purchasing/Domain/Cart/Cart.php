@@ -3,14 +3,14 @@
 namespace Selleet\Purchasing\Domain\Cart;
 
 use Selleet\BuildingBlocks\Aggregate\AggregateRoot;
-use Selleet\BuildingBlocks\Aggregate\AggregateRootTrait;
+use Selleet\BuildingBlocks\Aggregate\EventSourcedAggregateTrait;
 use Selleet\BuildingBlocks\Aggregate\DomainEvent;
 use Selleet\BuildingBlocks\Aggregate\UnknownDomainEventRecorded;
 use Selleet\Purchasing\Domain\Jewel\JewelId;
 
 final class Cart implements AggregateRoot
 {
-    use AggregateRootTrait;
+    use EventSourcedAggregateTrait;
 
     /**
      * @var CartId
@@ -36,7 +36,7 @@ final class Cart implements AggregateRoot
         return (new self())->recordThat(new EmptyCartWasPickedUp($cartId));
     }
 
-    public function add(JewelId $jewelId, int $price): self
+    public function addJewel(JewelId $jewelId, int $price): self
     {
         return $this->recordThat(new JewelWasAddedToCart($this->id, $jewelId, $price));
     }
@@ -44,11 +44,6 @@ final class Cart implements AggregateRoot
     public function totalPrice(): int
     {
         return $this->totalPrice;
-    }
-
-    public function getAggregateId(): CartId
-    {
-        return $this->id;
     }
 
     public function apply(DomainEvent $event): self

@@ -25,7 +25,7 @@ final class AddJewelToCartHandler implements CommandHandler
     {
         $cart = $this->cartRepository->get($command->cartId);
 
-        $cart = $cart->add($command->jewelId, $command->price);
+        $cart = $cart->addJewel($command->jewelId, $command->price);
 
         $this->cartRepository->save($cart);
     }

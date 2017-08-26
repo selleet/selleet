@@ -1,3 +1,5 @@
+/config/config.*.php
+/config/mysqlpwd.cnf
 /vendor/
 /bin/
 /var/tests/eventstore/*

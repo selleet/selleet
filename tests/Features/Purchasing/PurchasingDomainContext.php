@@ -48,7 +48,7 @@ class PurchasingDomainContext implements Context
      */
     public function iAddTheJewelToMyCart()
     {
-        $this->cart = $this->cart->add($this->jewel->getAggregateId(), $this->jewel->price());
+        $this->cart = $this->cart->addJewel($this->jewel->getAggregateId(), $this->jewel->price());
     }
 
     /**

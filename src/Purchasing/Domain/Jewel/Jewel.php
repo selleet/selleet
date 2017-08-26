@@ -3,16 +3,27 @@
 namespace Selleet\Purchasing\Domain\Jewel;
 
 use Selleet\BuildingBlocks\Aggregate\AggregateRoot;
-use Selleet\BuildingBlocks\Aggregate\AggregateRootTrait;
+use Selleet\BuildingBlocks\Aggregate\EventSourcedAggregateTrait;
 use Selleet\BuildingBlocks\Aggregate\DomainEvent;
 use Selleet\BuildingBlocks\Aggregate\UnknownDomainEventRecorded;
 
 final class Jewel implements AggregateRoot
 {
-    use AggregateRootTrait;
+    use EventSourcedAggregateTrait;
 
+    /**
+     * @var JewelId
+     */
     private $id;
+
+    /**
+     * @var string
+     */
     private $title;
+
+    /**
+     * @var int
+     */
     private $price;
 
     private function __construct()
@@ -27,11 +38,6 @@ final class Jewel implements AggregateRoot
     public function price(): int
     {
         return $this->price;
-    }
-
-    public function getAggregateId(): JewelId
-    {
-        return $this->id;
     }
 
     public function apply(DomainEvent $event): self

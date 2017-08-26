@@ -2,12 +2,17 @@
 
 namespace Selleet\BuildingBlocks\Aggregate;
 
-trait AggregateRootTrait
+trait EventSourcedAggregateTrait
 {
     /**
      * @var DomainEvent[]
      */
     private $recordedEvents = [];
+
+    public function getAggregateId()
+    {
+        return $this->id;
+    }
 
     /**
      * @param DomainEvent[] $historyEvents
@@ -30,8 +35,6 @@ trait AggregateRootTrait
     {
         return $this->recordedEvents;
     }
-
-    abstract public function getAggregateId(): string;
 
     abstract public function apply(DomainEvent $event);
 
